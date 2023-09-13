@@ -1,4 +1,4 @@
-import { CookieJar } from 'tough-cookie'
+import { Cookie, CookieJar } from 'tough-cookie'
 import { CompletedActivity, CompletedActivityPage } from './CompletedActivity';
 import { UpcomingActivityPage } from './UpcomingActivityPage';
 import { Activity } from './Activity';
@@ -7,9 +7,20 @@ import { Activity } from './Activity';
 // const jar = new CookieJar()
 // const c = await jar.setCookie(login_cookie, login_url);
 
-export async function upcoming(jar: CookieJar) {
+export async function upcoming(token: string) {
+
+    const cookie = new Cookie({
+        key: ".SATSBETA",
+        value: encodeURIComponent(JSON.stringify({ token })),
+        httpOnly: true,
+        sameSite: 'lax',
+    })
+
+    const jar = new CookieJar()
+    await jar.setCookie(cookie, "https://www.sats.se/mina-sidor/kommande-traning");
+
     const res = await fetch("https://www.sats.se/mina-sidor/kommande-traning", {
-        "headers": {
+        headers: {
             "Cookie": await jar.getCookieString("https://www.sats.se/mina-sidor/kommande-traning"),
             "Referer": "https://www.sats.se/mina-sidor",
         },

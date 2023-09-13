@@ -1,19 +1,16 @@
-import { CookieJar } from "tough-cookie"
 import { upcoming } from "../lib/sats"
 import { internalError, unauthorized } from "../lib/responses"
 
 export default defineEventHandler(async (event) => {
-    const login_cookie = getCookie(event, '.SATS-Cookie')
-    const login_url = getCookie(event, '.SATS-Url')
+    const token = getCookie(event, '.SATS-JWT')
+    const userId = getCookie(event, '.SATS-UserId')
+    console.log('Cookies', {token, userId})
 
-    if (!login_cookie) return await unauthorized(event, 'No .SATS-Cookie')
-    if (!login_url) return await unauthorized(event, 'No .SATS-Url')
-
-    const jar = new CookieJar()
-    await jar.setCookie(login_cookie, login_url);
+    if (!token) return await unauthorized(event, 'No SATS token')
+    if (!userId) return await unauthorized(event, 'No SATS userId')
 
     console.log("Fetching upcoming...")
-    const data = await upcoming(jar);
+    const data = await upcoming(token);
     console.log("Fetched upcoming:", data)
 
     if (data) return data
