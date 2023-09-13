@@ -25,6 +25,10 @@ jobs:
           channelId: live
           projectId: sats-strava
 
+      - uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SATS_STRAVA }}'
+
       - name: 'Update secrets'
         run: |
           gcloud functions deploy ssrsatsstrava --runtime nodejs18 \
