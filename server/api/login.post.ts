@@ -10,6 +10,6 @@ export default defineEventHandler(async (event) => {
         setCookie(event, '.SATS-UserId', userId, { httpOnly: true, secure: true, sameSite: "strict", maxAge: 31536000 })
         return { token, userId }
     } else {
-        return { error: 'failed', message: 'See logs' }
+        return await setResponseStatus(event, 403, 'SATS auth failed, see logs')
     }
 })
