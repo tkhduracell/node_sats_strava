@@ -24,3 +24,8 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SATS_STRAVA }}'
           channelId: live
           projectId: sats-strava
+
+      - name: 'Update secrets'
+        run: |
+          gcloud functions deploy ssrsatsstrava --runtime nodejs18 \
+            --set-secrets 'STRAVA_CLIENT_ID=STRAVA_CLIENT_ID:latest,STRAVA_CLIENT_SECRET=STRAVA_CLIENT_SECRET:latest'
