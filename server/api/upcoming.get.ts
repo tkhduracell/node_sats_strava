@@ -4,7 +4,8 @@ import { internalError, unauthorized } from "../lib/responses"
 export default defineEventHandler(async (event) => {
     const token = getCookie(event, '.SATS-JWT')
     const userId = getCookie(event, '.SATS-UserId')
-    console.log('Cookies', {token, userId})
+    const session = getCookie(event, '__session')
+    console.log('Cookies', {token, userId, session})
 
     if (!token) return await unauthorized(event, 'No SATS token')
     if (!userId) return await unauthorized(event, 'No SATS userId')
