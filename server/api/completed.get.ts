@@ -1,6 +1,7 @@
 import { completed } from "../lib/sats"
 
 export default defineEventHandler(async (event) => {
+    console.warn(event.path, 'called!')
     const token = getCookie(event, '.SATS-JWT')
     const userId = getCookie(event, '.SATS-UserId')
 
