@@ -1,3 +1,4 @@
+import { addSessionValues } from "../lib/cookie"
 import { invalidRequest, unauthorized } from "../lib/responses"
 import { auth } from "../lib/sats"
 
@@ -10,9 +11,7 @@ export default defineEventHandler(async (event) => {
     const res = await auth(username, password)
     if (res) {
         const { token, userId } = res
-        setCookie(event, '.SATS-JWT', token, { httpOnly: true, secure: true, sameSite: "strict", maxAge: 31536000 })
-        setCookie(event, '.SATS-UserId', userId, { httpOnly: true, secure: true, sameSite: "strict", maxAge: 31536000 })
-        setCookie(event, '__session', JSON.stringify({ token, userId }), { httpOnly: true, secure: true, sameSite: "strict", maxAge: 31536000 })
+        addSessionValues(event, { 'Sats-JWT':  token, 'Sats-UserId': userId})
         return { token, userId }
     } else {
         return await unauthorized(event, 'SATS auth failed')

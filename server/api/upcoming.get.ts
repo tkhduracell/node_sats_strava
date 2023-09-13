@@ -1,14 +1,11 @@
 import { upcoming } from "../lib/sats"
 import { internalError, unauthorized } from "../lib/responses"
+import { getSessionValue } from "../lib/cookie"
 
 export default defineEventHandler(async (event) => {
-    const token = getCookie(event, '.SATS-JWT')
-    const userId = getCookie(event, '.SATS-UserId')
-    const session = getCookie(event, '__session')
-    console.log('Cookies', {token, userId, session})
+    const token = getSessionValue(event, 'Sats-JWT')
 
     if (!token) return await unauthorized(event, 'No SATS token')
-    if (!userId) return await unauthorized(event, 'No SATS userId')
 
     console.log("Fetching upcoming...")
     const data = await upcoming(token);

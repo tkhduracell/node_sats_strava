@@ -1,3 +1,4 @@
+import { getSessionValue } from "../lib/cookie";
 import { internalError, invalidRequest } from "../lib/responses";
 import { activity } from "../lib/sats"
 import { StravaSportType, createActivity } from "../lib/strava";
@@ -11,10 +12,10 @@ export default defineEventHandler(async (event) => {
     const { activity: activityId } = getQuery(event)
     if (typeof activityId !== 'string') return await invalidRequest(event, 'Invalid activity: ' + activity)
 
-    const stravaToken = getCookie(event, 'Strava-Token');
+    const stravaToken = getSessionValue(event, 'Strava-JWT')
     if (typeof stravaToken !== 'string') return await invalidRequest(event, 'Strava token not valid')
 
-    const satsToken = getCookie(event, '.SATS-JWT');
+    const satsToken = getSessionValue(event, 'Sats-JWT')
     if (typeof satsToken !== 'string') return await invalidRequest(event, 'Sats token not valid')
 
     const res = await activity(satsToken, activityId)

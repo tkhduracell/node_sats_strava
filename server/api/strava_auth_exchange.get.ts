@@ -1,3 +1,4 @@
+import { addSessionValues } from "../lib/cookie"
 
 
 export default defineEventHandler(async (event) => {
@@ -23,7 +24,7 @@ export default defineEventHandler(async (event) => {
     if (res.ok) {
         const {expires_at, expires_in, access_token, refresh_token, athlete, token_type} = await res.json()
 
-        setCookie(event, 'Strava-Token', access_token, { httpOnly: true, secure: true, sameSite: "strict", maxAge: expires_in })
+        addSessionValues(event, { 'Strava-JWT': access_token })
         await sendRedirect(event, '/upload?state=' + (typeof state == 'string' ? state : ''))
     } else {
         console.log('Failed to exchange Strava token', { code: res.status, text: res.statusText })
