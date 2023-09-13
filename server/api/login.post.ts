@@ -1,7 +1,11 @@
-import { auth, login } from "../lib/sats"
+import { invalidRequest, unauthorized } from "../lib/responses"
+import { auth } from "../lib/sats"
 
 export default defineEventHandler(async (event) => {
     const { username, password } = await readBody(event)
+
+    if (!username) return await invalidRequest(event, 'No "username" provided')
+    if (!password) return await invalidRequest(event, 'No "password" provided')
 
     const res = await auth(username, password)
     if (res) {
@@ -10,6 +14,6 @@ export default defineEventHandler(async (event) => {
         setCookie(event, '.SATS-UserId', userId, { httpOnly: true, secure: true, sameSite: "strict", maxAge: 31536000 })
         return { token, userId }
     } else {
-        return await setResponseStatus(event, 403, 'SATS auth failed, see logs')
+        return await unauthorized(event, 'SATS auth failed')
     }
 })

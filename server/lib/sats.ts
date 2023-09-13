@@ -29,8 +29,8 @@ export async function upcoming(jar: CookieJar) {
         }
         return out
     } else {
-        console.error(res.statusText, res.status);
-        return {}
+        console.error('Failed to fetch upcoming', res.statusText, res.status);
+        return null
     }
 }
 

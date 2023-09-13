@@ -1,3 +1,4 @@
+import { internalError, invalidRequest } from "../lib/responses";
 import { activity } from "../lib/sats"
 import { StravaSportType, createActivity } from "../lib/strava";
 
@@ -8,13 +9,13 @@ const activityMapping: Record<string, StravaSportType> = {
 
 export default defineEventHandler(async (event) => {
     const { activity: activityId } = getQuery(event)
-    if (typeof activityId !== 'string') return setResponseStatus(event, 400, 'Invalid activity: ' + activity)
+    if (typeof activityId !== 'string') return await invalidRequest(event, 'Invalid activity: ' + activity)
 
     const stravaToken = getCookie(event, 'Strava-Token');
-    if (typeof stravaToken !== 'string') return setResponseStatus(event, 400, 'Strava token not valid')
+    if (typeof stravaToken !== 'string') return await invalidRequest(event, 'Strava token not valid')
 
     const satsToken = getCookie(event, '.SATS-JWT');
-    if (typeof satsToken !== 'string') return setResponseStatus(event, 400, 'Sats token not valid')
+    if (typeof satsToken !== 'string') return await invalidRequest(event, 'Sats token not valid')
 
     const res = await activity(satsToken, activityId)
 
@@ -31,10 +32,11 @@ export default defineEventHandler(async (event) => {
             trainer: 0,
             commute: 0,
         })
-        if (!uploaded) return setResponseStatus(event, 500, 'Failed to upload')
 
-        return uploaded
+        if (uploaded) return uploaded
+
+        return await internalError(event, 'Failed to upload')
     }
 
-    return setResponseStatus(event, 500, 'Failed to fetch SATS activity')
+    return await internalError(event,  'Failed to fetch SATS activity')
 })

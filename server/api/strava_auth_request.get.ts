@@ -1,7 +1,10 @@
+import { invalidRequest } from "../lib/responses"
 
 
 export default defineEventHandler(async (event) => {
     const { state } = getQuery(event)
+
+    if (!state) return await invalidRequest(event, 'No "state" provided')
 
     const url = new URL("https://www.strava.com/oauth/authorize")
     url.searchParams.append("client_id", process.env.STRAVA_CLIENT_ID ?? '')
