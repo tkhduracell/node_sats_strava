@@ -24,12 +24,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SATS_STRAVA }}'
           channelId: live
           projectId: sats-strava
-
-      - uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SATS_STRAVA }}'
-
-      - name: 'Update secrets'
-        run: |
-          gcloud functions deploy ssrsatsstrava --runtime nodejs18 --trigger-http --gen2 --region europe-west1 \
-            --set-secrets 'STRAVA_CLIENT_ID=STRAVA_CLIENT_ID:latest,STRAVA_CLIENT_SECRET=STRAVA_CLIENT_SECRET:latest'
