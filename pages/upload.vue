@@ -1,10 +1,11 @@
 <template>
-
-    <ProgressSpinner v-if="pending" />
-
+    <div class="flex align-items-center absolute top-50 bottom-50 w-full" v-if="pending">
+        <ProgressSpinner />
+    </div>
 </template>
 
 <script setup lang="ts">
+useSeoMeta({ title: 'Strava: Uploading...' })
 import { StravaActivity } from '~/server/lib/StravaActivity';
 
 const { query } = useRoute()

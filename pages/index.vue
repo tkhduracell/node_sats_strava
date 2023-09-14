@@ -7,3 +7,6 @@
     </div>
 
 </template>
+<script setup>
+useSeoMeta({ title: 'Sats -> Strava: Welcome' })
+</script>

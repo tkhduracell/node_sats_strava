@@ -1,5 +1,5 @@
 <template>
-    <h1>Upload Activities</h1>
+    <h1>Upload Activity</h1>
     <h2>Completed Activities</h2>
     <div v-if="completedError">
       {{ completedError }}
@@ -40,6 +40,7 @@
 
 
 <script lang="ts" setup>
+useSeoMeta({ title: 'Sats: Upload Activity' })
 
 const { data: upcoming, error: upcomingError } = await useAsyncData(
   'upcoming',
