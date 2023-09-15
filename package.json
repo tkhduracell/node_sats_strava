@@ -15,9 +15,12 @@
     "nuxt": "^3.7.1"
   },
   "dependencies": {
+    "@vee-validate/zod": "^4.11.6",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primevue": "^3.34.1",
-    "tough-cookie": "^4.1.3"
+    "tough-cookie": "^4.1.3",
+    "vee-validate": "^4.11.6",
+    "zod": "^3.22.2"
   }
 }
