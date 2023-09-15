@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
         const { brand, activityName, date, duration } = res
 
         const uploaded = await createActivity(stravaToken, {
-            name: brand + ' ' + activityName,
+            name: brand.toUpperCase() + ': ' + activityName,
             description: '',
             distance: 0,
             elapsed_time: duration * 60,
