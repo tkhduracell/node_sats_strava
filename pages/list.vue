@@ -1,5 +1,5 @@
 <template>
-    <h1>Upload Activity</h1>
+    <h1>Upload SATS Activity</h1>
     <h2>Completed Activities</h2>
     <div v-if="completedError">
       {{ completedError }}
