@@ -16,4 +16,12 @@
 </template>
 <script setup>
 useSeoMeta({ title: 'Sats -> Strava: Welcome' })
+
+const { data } = useAsyncData(() => $fetch('/api/login'), { server: false })
+
+const router = useRouter()
+watch(data, v => {
+    if (!!v?.userId) router.push({ path: '/list' })
+})
+
 </script>
