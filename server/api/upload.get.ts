@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
         const uploaded = await createActivity(stravaToken, {
             name: brand.toUpperCase() + ': ' + activityName,
-            description: '',
+            description: 'Uploaded with https://sats-strava.web.app/',
             distance: 0,
             elapsed_time: duration * 60,
             start_date_local: date,
