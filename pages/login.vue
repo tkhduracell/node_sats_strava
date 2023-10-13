@@ -43,8 +43,8 @@ const { values: form, errors,
     isSubmitting
 } = useForm({
     validationSchema: toTypedSchema(z.object({
-        username: z.string().min(3).max(255).nonempty(),
-        password: z.string().min(3).max(255).nonempty(),
+        username: z.string().min(3).max(255),
+        password: z.string().min(3).max(255),
     }))
 });
 
