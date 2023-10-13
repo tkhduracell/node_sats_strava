@@ -4,7 +4,12 @@
     <div v-if="completedError">
       {{ completedError }}
     </div>
-    <div v-else-if="completed" class="grid">
+    <div v-else-if="Array.isArray(completed) && completed.length === 0" class="grid">
+      <div class="col-12 md:col-6 lg:col-5 xl:col-4">
+        You have no completed activites.
+      </div>
+    </div>
+    <div v-else-if="Array.isArray(completed)" class="grid">
       <div v-for="item in completed" class="col-12 md:col-6 lg:col-5 xl:col-4 flex">
         <div class="flex flex-row surface-ground border-round p-1 w-full">
           <div class="flex align-items-center">
@@ -26,7 +31,12 @@
     <div v-if="upcomingError">
       {{ upcomingError }}
     </div>
-    <div v-else-if="upcoming" class="grid">
+    <div v-else-if="Array.isArray(upcoming) && upcoming.length === 0" class="grid">
+      <div class="col-12 md:col-6 lg:col-5 xl:col-4">
+        You have no planned activites.
+      </div>
+    </div>
+    <div v-else-if="Array.isArray(upcoming)" class="grid">
       <div v-for="item in upcoming" class="col-12 md:col-6 lg:col-5 xl:col-4">
         <div class="flex flex-column surface-ground border-round m-2 p-2">
           <div class="text-2xl mb-1">{{ item.activityName }}</div>
