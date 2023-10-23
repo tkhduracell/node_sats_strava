@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
     console.log("Fetching upcoming...")
     const data = await upcoming(token);
-    console.log("Fetched upcoming:", data)
+    console.log("Fetched", data?.length, "activities")
 
     if (data) return data
 

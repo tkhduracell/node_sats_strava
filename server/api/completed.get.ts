@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
     console.log("Fetching completed...")
     const data = await completed(token, userId);
-    console.log("Fetched completed:", data)
+    console.log("Fetched", data?.length, "activities")
 
     if (data) return data
 
