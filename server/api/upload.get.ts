@@ -6,6 +6,7 @@ import { StravaSportType, createActivity } from "../lib/strava";
 const activityMapping: Record<string, StravaSportType> = {
     'Crosstraining': 'Crossfit',
     'BodyPump': 'WeightTraining',
+    'PT60': 'WeightTraining'
 }
 
 export default defineEventHandler(async (event) => {
@@ -21,11 +22,17 @@ export default defineEventHandler(async (event) => {
     const res = await activity(satsToken, activityId)
 
     if (res) {
-        const { brand, activityName, date, duration } = res
+        const { brand, activityName, date, duration, instructor, center } = res
+
+        let description = 'Uploaded with https://sats-strava.web.app/'
+
+        if (activityName === 'PT60') description = `Personal trainer session with ${instructor}\n${description}`
+
+        const prefix = center && center.name ? center.name : brand.toUpperCase()
 
         const uploaded = await createActivity(stravaToken, {
-            name: brand.toUpperCase() + ': ' + activityName,
-            description: 'Uploaded with https://sats-strava.web.app/',
+            name: `${prefix}: ${activityName}`,
+            description: description,
             distance: 0,
             elapsed_time: duration * 60,
             start_date_local: date,
