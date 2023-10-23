@@ -51,6 +51,7 @@
 
 <script lang="ts" setup>
 useSeoMeta({ title: 'Sats: Upload Activity' })
+const router = useRouter()
 
 const { data: upcoming, error: upcomingError } = await useAsyncData(
   'upcoming',
@@ -63,6 +64,17 @@ const { data: completed, error: completedError } = await useAsyncData(
   () => $fetch('/api/completed'),
   { immediate: true, server: false }
 )
+
+watch(completedError, (err) => {
+  if (err?.name === "FetchError"  && 'statusCode' in err && err.statusCode === 403) {
+    router.push({ name: 'login' })
+  }
+})
+watch(upcomingError, (err) => {
+  if (err?.name === "FetchError"  && 'statusCode' in err && err.statusCode === 403) {
+    router.push({ name: 'login' })
+  }
+})
 
 async function select(id: string) {
   document.location = '/api/strava_auth_request?state=' + id
