@@ -6,7 +6,8 @@ import { StravaSportType, createActivity } from "../lib/strava";
 const activityMapping: Record<string, StravaSportType> = {
     'Crosstraining': 'Crossfit',
     'BodyPump': 'WeightTraining',
-    'PT60': 'WeightTraining'
+    'PT60': 'WeightTraining',
+    'PTstart': 'WeightTraining',
 }
 
 export default defineEventHandler(async (event) => {
