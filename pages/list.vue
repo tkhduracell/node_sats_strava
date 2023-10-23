@@ -50,7 +50,7 @@
 
 
 <script lang="ts" setup>
-useSeoMeta({ title: 'Sats: Upload Activity' })
+useSeoMeta({ title: 'SATS: Upload Activity' })
 const router = useRouter()
 
 const { data: upcoming, error: upcomingError } = await useAsyncData(

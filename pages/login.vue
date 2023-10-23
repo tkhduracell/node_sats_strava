@@ -35,7 +35,7 @@ import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
 
 const router = useRouter()
-useSeoMeta({ title: 'Sats: Log In' })
+useSeoMeta({ title: 'SATS: Log In' })
 
 const { values: form, errors,
     meta, setFieldError,

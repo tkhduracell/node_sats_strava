@@ -15,7 +15,7 @@
 
 </template>
 <script setup>
-useSeoMeta({ title: 'Sats -> Strava: Welcome' })
+useSeoMeta({ title: 'SATS -> Strava: Welcome' })
 
 const { data } = useAsyncData(() => $fetch('/api/login'), { server: false })
 
