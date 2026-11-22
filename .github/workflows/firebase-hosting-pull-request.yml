@@ -10,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      # Dependabot PRs can't read repo secrets; build still verifies them.
+      - if: github.actor != 'dependabot[bot]'
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SATS_STRAVA }}'
